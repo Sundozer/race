@@ -17,14 +17,32 @@ body {
     display: flex;
     flex-direction: column;
 }
+
 .car-pic {
     width: 140px;
     height: 100px;
+    position: relative;
 }
+
+.car-animation {
+    animation: 2s linear;
+    animation-name: lolo;
+}
+
+@keyframes lolo {
+    from {
+        left: 0;
+    }
+
+    to {
+        left: 86%;
+    }
+}
+
 .one-of-cars {
     display: flex;
     flex-direction: column;
-    margin-bottom: -40px;
+    margin-bottom: -60px;
 }
 .butA {
     width: 30px;
@@ -51,7 +69,8 @@ body {
 .flag {
     height: 100px;
     position: absolute;
-    right: 100px;
+    bottom: 30px;
+    left: 85%;
 }
 .car-flag {
     display: flex;

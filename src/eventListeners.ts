@@ -1,9 +1,14 @@
 import { createCar } from './createCar';
+import { moveOneCar, reset } from './move';
 
 export function eventListeners() {
   const carsBlock = document.querySelector('.cars-block');
   carsBlock!.addEventListener('click', (e) => {
-    // console.log(e.target)
+    const targ = e.target as HTMLElement;
+    const carToMove = document.querySelector(`#carNum${targ.id[3]}`) as HTMLElement;
+    if (targ.className === 'butA') {
+      moveOneCar(carToMove)
+    }
   });
 
   const createButton = document.querySelector('.create-car-button');
@@ -15,4 +20,28 @@ export function eventListeners() {
   });
 
   const updateText = document.querySelector('.update-car-text');
+
+
+  
+  const startRace = document.querySelector('.race-cars-button')
+  startRace!.addEventListener('click', () => {
+    const allCars = document.querySelectorAll('.car-pic');
+    allCars.forEach(el => {
+      let elem = el as HTMLElement;
+      moveOneCar(elem)
+    })
+  })
+
+
+  const resetCars = document.querySelector('.reset-cars-button')
+  resetCars?.addEventListener('click', () => {
+    const allCars = document.querySelectorAll('.car-pic');
+    allCars.forEach(el => {
+      let elem = el as HTMLElement;
+      reset(elem)
+    })
+
+    
+  })
+
 }

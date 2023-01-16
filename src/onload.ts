@@ -3,6 +3,10 @@ import {
 } from './server-methods';
 import urlPng from './flag.png';
 
+function writeNumberOfCars(number:number) {
+    document.querySelector('.garage')!.innerHTML = `Garage(${number})`
+}
+
 export async function onload() {
   const numberOfDots = window.innerWidth / 2;
   const carsBlock = document.querySelector('.cars-block');
@@ -23,12 +27,12 @@ export async function onload() {
                 <div class="butA" id="but${element.id}">A</div>
             </div>
             <div>
-                <div class="butA" id="but${element.id}">B</div>
+                <div class="butA butB" id="but${element.id}">B</div>
             </div>
         </div>
         <div class="car-flag" id="line${element.id}">
-            <div>
-                <svg class="car-pic" id="${element.id}" version="1.0" xmlns="http://www.w3.org/2000/svg"
+            <div style="width: 100%">
+                <svg class="car-pic" id="carNum${element.id}" version="1.0" xmlns="http://www.w3.org/2000/svg"
                 width="1280.000000pt" height="640.000000pt" viewBox="0 0 1280.000000 640.000000"
                 preserveAspectRatio="xMidYMid meet">
                 <g fill="${element.color}" transform="translate(0.000000,640.000000) scale(0.100000,-0.100000)"
@@ -132,4 +136,5 @@ export async function onload() {
         <p style="overflow-x: hidden">${'.'.repeat(numberOfDots)}</p>`;
     document.querySelector(`#line${element.id}`)!.appendChild(flagPng);
   });
+  writeNumberOfCars(cars.length)
 }
