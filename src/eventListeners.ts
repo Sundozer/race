@@ -7,7 +7,7 @@ export function eventListeners() {
     const targ = e.target as HTMLElement;
     const carToMove = document.querySelector(`#carNum${targ.id[3]}`) as HTMLElement;
     if (targ.className === 'butA') {
-      moveOneCar(carToMove)
+      moveOneCar(carToMove);
     }
   });
 
@@ -21,27 +21,21 @@ export function eventListeners() {
 
   const updateText = document.querySelector('.update-car-text');
 
-
-  
-  const startRace = document.querySelector('.race-cars-button')
+  const startRace = document.querySelector('.race-cars-button');
   startRace!.addEventListener('click', () => {
     const allCars = document.querySelectorAll('.car-pic');
-    allCars.forEach(el => {
-      let elem = el as HTMLElement;
-      moveOneCar(elem)
-    })
-  })
+    allCars.forEach((el) => {
+      const elem = el as HTMLElement;
+      moveOneCar(elem);
+    });
+  });
 
-
-  const resetCars = document.querySelector('.reset-cars-button')
+  const resetCars = document.querySelector('.reset-cars-button');
   resetCars?.addEventListener('click', () => {
     const allCars = document.querySelectorAll('.car-pic');
-    allCars.forEach(el => {
-      let elem = el as HTMLElement;
-      reset(elem)
-    })
-
-    
-  })
-
+    allCars.forEach((el) => {
+      const elem = el as HTMLElement;
+      reset(elem);
+    });
+  });
 }

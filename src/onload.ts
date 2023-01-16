@@ -4,7 +4,7 @@ import {
 import urlPng from './flag.png';
 
 function writeNumberOfCars(number:number) {
-    document.querySelector('.garage')!.innerHTML = `Garage(${number})`
+  document.querySelector('.garage')!.innerHTML = `Garage(${number})`;
 }
 
 export async function onload() {
@@ -136,5 +136,5 @@ export async function onload() {
         <p style="overflow-x: hidden">${'.'.repeat(numberOfDots)}</p>`;
     document.querySelector(`#line${element.id}`)!.appendChild(flagPng);
   });
-  writeNumberOfCars(cars.length)
+  writeNumberOfCars(cars.length);
 }
