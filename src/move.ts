@@ -11,7 +11,6 @@ export async function moveOneCar(car: HTMLElement) {
     if (!response.ok) {
       // car.classList.remove('car-animation')
       car.style.animationPlayState = 'paused';
-      console.log(car);
     }
     fetch(`http://127.0.0.1:3000/engine/?id=${car.id[6]}&status=stopped`, {
       method: 'PATCH',
@@ -33,4 +32,7 @@ export function reset(car: HTMLElement) {
   car.classList.remove('car-animation');
   car.style.left = '0%';
   car.style.animation = '';
+  fetch(`http://127.0.0.1:3000/engine/?id=${car.id[6]}&status=stopped`, {
+      method: 'PATCH',
+    });
 }
