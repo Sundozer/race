@@ -10,6 +10,18 @@ export function eventListeners() {
     if (targ.className === 'butA') {
       moveOneCar(carToMove);
     }
+    if (targ.className === 'butA butB') {
+      reset(carToMove);
+    }
+    const target = e.target as HTMLElement;
+    if (target.innerHTML === 'Select') {
+      target.innerHTML = 'Selected';
+      setTimeout(() => {
+        target.innerHTML = 'Select'
+      }, 2000);
+      selected = target.parentElement!.nextElementSibling!.nextElementSibling!.firstElementChild!.firstElementChild! as HTMLElement;
+      carName = target.nextElementSibling?.nextElementSibling as HTMLElement;
+    }
   });
 
   const createButton = document.querySelector('.create-car-button');
@@ -63,19 +75,5 @@ export function eventListeners() {
       reset(elem);
     });
   });
-
-  window.addEventListener('click', (e) => {
-    const target = e.target as HTMLElement;
-    if (target.innerHTML === 'Select') {
-      target.innerHTML = 'Selected';
-      setTimeout(() => {
-        target.innerHTML = 'Select'
-      }, 2000);
-      selected = target.parentElement!.nextElementSibling!.nextElementSibling!.firstElementChild!.firstElementChild! as HTMLElement;
-      carName = target.nextElementSibling?.nextElementSibling as HTMLElement;
-    }
-  })
-
-
 
 }
