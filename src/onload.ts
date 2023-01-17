@@ -16,7 +16,7 @@ export async function onload() {
   flagPng.classList.add('flag');
   cars.reverse();
   cars.forEach((element: { name: string, color: string, id: number }) => {
-    carsBlock!.innerHTML += `<div class="one-of-cars">
+    carsBlock!.innerHTML += `<div class="one-of-cars" id="one-of-cars${element.id}">
         <div>
             <button class="car-buttons" id="select${element.id}">Select</button>
             <button class="car-buttons" id="remove${element.id}">Remove</button>
@@ -132,8 +132,9 @@ export async function onload() {
                 </svg>
             </div>
         </div>
+        <p style="overflow-x: hidden" class="dots">${'.'.repeat(numberOfDots)}</p>
         </div>
-        <p style="overflow-x: hidden">${'.'.repeat(numberOfDots)}</p>`;
+        `;
     document.querySelector(`#line${element.id}`)!.appendChild(flagPng);
   });
   writeNumberOfCars(cars.length);

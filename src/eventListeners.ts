@@ -1,4 +1,4 @@
-import { createCar, updateCarServer } from './createCar';
+import { createCar, updateCarServer, deleteCar } from './createCar';
 import { moveOneCar, reset } from './move';
 import { updateCar } from './update-car';
 
@@ -13,14 +13,16 @@ export function eventListeners() {
     if (targ.className === 'butA butB') {
       reset(carToMove);
     }
-    const target = e.target as HTMLElement;
-    if (target.innerHTML === 'Select') {
-      target.innerHTML = 'Selected';
+    if (targ.innerHTML === 'Select') {
+      targ.innerHTML = 'Selected';
       setTimeout(() => {
-        target.innerHTML = 'Select'
+        targ.innerHTML = 'Select'
       }, 2000);
-      selected = target.parentElement!.nextElementSibling!.nextElementSibling!.firstElementChild!.firstElementChild! as HTMLElement;
-      carName = target.nextElementSibling?.nextElementSibling as HTMLElement;
+      selected = targ.parentElement!.nextElementSibling!.nextElementSibling!.firstElementChild!.firstElementChild! as HTMLElement;
+      carName = targ.nextElementSibling?.nextElementSibling as HTMLElement;
+    }
+    if (targ.innerHTML === 'Remove') {
+      deleteCar(targ)
     }
   });
 
