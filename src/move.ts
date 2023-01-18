@@ -1,18 +1,18 @@
 export async function moveOneCar(car: HTMLElement) {
-  const { innerWidth } = window;
-  const resp = await fetch(`http://127.0.0.1:3000/engine/?id=${car.id[6]}&status=started`, {
+  const idNumber = Number(car.id.slice(6));
+  const resp = await fetch(`http://127.0.0.1:3000/engine/?id=${idNumber}&status=started`, {
     method: 'PATCH',
   });
   const ditanceVelocity = await resp.json();
 
-  fetch(`http://127.0.0.1:3000/engine/?id=${car.id[6]}&status=drive`, {
+  fetch(`http://127.0.0.1:3000/engine/?id=${idNumber}&status=drive`, {
     method: 'PATCH',
   }).then((response) => {
     if (!response.ok) {
       // car.classList.remove('car-animation')
       car.style.animationPlayState = 'paused';
     }
-    fetch(`http://127.0.0.1:3000/engine/?id=${car.id[6]}&status=stopped`, {
+    fetch(`http://127.0.0.1:3000/engine/?id=${idNumber}&status=stopped`, {
       method: 'PATCH',
     });
   });
@@ -29,10 +29,25 @@ export async function moveOneCar(car: HTMLElement) {
 }
 
 export function reset(car: HTMLElement) {
+  const idNumber = Number(car.id.slice(6));
   car.classList.remove('car-animation');
   car.style.left = '0%';
   car.style.animation = '';
-  fetch(`http://127.0.0.1:3000/engine/?id=${car.id[6]}&status=stopped`, {
-      method: 'PATCH',
-    });
+  fetch(`http://127.0.0.1:3000/engine/?id=${idNumber}&status=stopped`, {
+    method: 'PATCH',
+  });
+  
+}
+
+
+export function changeButtonsToB(butA: HTMLElement) {
+  butA.style.opacity = '0.5';
+  const butB = butA.parentElement?.nextElementSibling?.firstElementChild as HTMLElement;
+  butB.style.opacity = '1';
+}
+
+export function changeButtonsToA(butB: HTMLElement) {
+  butB.style.opacity = '0.5';
+  const butA = butB.parentElement?.previousElementSibling?.firstElementChild as HTMLElement;
+  butA.style.opacity = '1';
 }

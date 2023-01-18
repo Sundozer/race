@@ -17,16 +17,22 @@ export async function createCar(nam: string, col: string) {
 
 export function updateCarServer(id: number, body: { name:string, color: string }) {
   if (body!.name && body!.color) {
-    updateServerId(id!, body!)
+    updateServerId(id!, body!);
   }
 }
 
-
 export function deleteCar(car: HTMLElement) {
-  const findedCar = document.querySelector(`#one-of-cars${car.id[6]}`)
-  console.log(findedCar)
-  findedCar?.parentNode?.removeChild(findedCar)
-  deleteServerId(Number(car.id[6]))
+  const idNumber = car.id.slice(6)
+  const findedCar = document.querySelector(`#one-of-cars${idNumber}`);
+  findedCar?.parentNode?.removeChild(findedCar);
   const numberToWrite = document.querySelectorAll('.one-of-cars');
-  document.querySelector('.garage')!.innerHTML = `Garage(${numberToWrite.length})`
+  document.querySelector('.garage')!.innerHTML = `Garage(${numberToWrite.length})`;
+  deleteServerId(Number(idNumber))
+}
+
+export function generate100(nam: string, col: string) {
+  createServerId({
+    name: nam,
+    color: col,
+  });
 }
