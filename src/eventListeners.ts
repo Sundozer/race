@@ -3,6 +3,7 @@ import { moveOneCar, reset, changeButtonsToB, changeButtonsToA } from './move';
 import { updateCar } from './update-car';
 import { onload } from './onload';
 import { createPages } from './createPages';
+export let currentPage = 1;
 
 export function eventListeners() {
   const carsBlock = document.querySelector('.cars-block');
@@ -13,6 +14,7 @@ export function eventListeners() {
   const updateColor = document.querySelector('.update-color') as HTMLInputElement;
   const updateText = document.querySelector('.update-car-text') as HTMLInputElement;
   const generateCarsButton = document.querySelector('.generate-cars-button') as HTMLInputElement;
+  const pagesBlock = document.querySelector('.pages-block') as HTMLElement;
   let selected: HTMLElement | null | undefined;
   let carName: HTMLElement | null | undefined;
 
@@ -48,8 +50,6 @@ export function eventListeners() {
       createCar(createText!.value, createColor!.value);
       createText!.value = '';
     }
-    const allCars = document.querySelectorAll('.one-of-cars');
-    createPages(allCars)
   });
 
   updateCarButton!.addEventListener('click', () => {
@@ -165,10 +165,13 @@ export function eventListeners() {
       generate100(carsList[Math.ceil(Math.random() * carsList.length)], randomColor)
     }
     carsBlock!.innerHTML = '';
+    pagesBlock.innerHTML = '';
     onload();
+  })
 
-
-
-
+  pagesBlock.addEventListener('click', (e) => {
+    const targ = e.target as HTMLElement;
+    currentPage = Number(targ.innerHTML.slice(4))
+    createPages()
   })
 }

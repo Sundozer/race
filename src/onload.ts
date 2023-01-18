@@ -2,6 +2,7 @@ import {
   getServer, createServerId, updateServerId, updateServerIdParameter, deleteServerId,
 } from './server-methods';
 import urlPng from './flag.png';
+import { createPages } from './createPages';
 
 function writeNumberOfCars(number:number) {
   document.querySelector('.garage')!.innerHTML = `Garage(${number})`;
@@ -138,4 +139,5 @@ export async function onload() {
     document.querySelector(`#line${element.id}`)!.appendChild(flagPng);
   });
   writeNumberOfCars(cars.length);
+  createPages()
 }
