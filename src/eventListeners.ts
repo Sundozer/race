@@ -4,6 +4,7 @@ import { updateCar } from './update-car';
 import { onload } from './onload';
 import { createPages } from './createPages';
 export let currentPage = 1;
+export let finishList: {id: number, velocity: number}[] = []
 
 export function eventListeners() {
   const carsBlock = document.querySelector('.cars-block');
@@ -73,6 +74,7 @@ export function eventListeners() {
 
   const startRace = document.querySelector('.race-cars-button');
   startRace!.addEventListener('click', () => {
+    finishList = [];
     const allCars = document.querySelectorAll('.car-pic');
     allCars.forEach((el) => {
       const elem = el as HTMLElement;

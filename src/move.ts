@@ -1,15 +1,19 @@
+import { finishList } from './eventListeners';
+import { winner } from './winner';
+
 export async function moveOneCar(car: HTMLElement) {
   const idNumber = Number(car.id.slice(6));
   const resp = await fetch(`http://127.0.0.1:3000/engine/?id=${idNumber}&status=started`, {
     method: 'PATCH',
   });
   const ditanceVelocity = await resp.json();
+  
 
   fetch(`http://127.0.0.1:3000/engine/?id=${idNumber}&status=drive`, {
     method: 'PATCH',
   }).then((response) => {
     if (!response.ok) {
-      // car.classList.remove('car-animation')
+      // finishList.splice(finishList.findIndex(x => x.id.toString() === `${idNumber}`), 1)
       car.style.animationPlayState = 'paused';
     }
     fetch(`http://127.0.0.1:3000/engine/?id=${idNumber}&status=stopped`, {
@@ -18,6 +22,10 @@ export async function moveOneCar(car: HTMLElement) {
   });
 
   function animEnd() {
+    if (!finishList.length) {
+      finishList.push({id: idNumber, velocity: ditanceVelocity.velocity})
+      winner(finishList[0].id)
+    }
     car.classList.remove('car-animation');
     car.style.left = '86%';
     car.removeEventListener('animationend', animEnd);
