@@ -16,6 +16,10 @@ export function eventListeners() {
   const updateText = document.querySelector('.update-car-text') as HTMLInputElement;
   const generateCarsButton = document.querySelector('.generate-cars-button') as HTMLInputElement;
   const pagesBlock = document.querySelector('.pages-block') as HTMLElement;
+  const toGarage = document.querySelector('.to-garage') as HTMLButtonElement;
+  const garagePage = document.querySelector('.garage-page') as HTMLButtonElement;
+  const toWinners = document.querySelector('.to-winners') as HTMLButtonElement;
+  const winnersPage = document.querySelector('.winners-page') as HTMLButtonElement;
   let selected: HTMLElement | null | undefined;
   let carName: HTMLElement | null | undefined;
 
@@ -175,5 +179,19 @@ export function eventListeners() {
     const targ = e.target as HTMLElement;
     currentPage = Number(targ.innerHTML.slice(4))
     createPages()
+  })
+
+  toGarage.addEventListener('click', () => {
+    garagePage.style.opacity = '1';
+    garagePage.style.zIndex = '5'
+    winnersPage.style.opacity = '0';
+    winnersPage.style.zIndex = '-5'
+  })
+
+  toWinners.addEventListener('click', () => {
+    winnersPage.style.opacity = '1';
+    winnersPage.style.zIndex = '5'
+    garagePage.style.opacity = '0';
+    garagePage.style.zIndex = '-5'
   })
 }

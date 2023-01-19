@@ -9,7 +9,10 @@ body {
     font-size: 24px;
     cursor: pointer;
 }
-
+.garage-page {
+    position: relative;
+    z-index: 5;
+}
 .garage {
     font-size: 30px;
 }
@@ -91,4 +94,10 @@ body {
 .pages-block {
     position: relative;
     z-index: 50;
+}
+
+.winners-page {
+    position: relative;
+    z-index: -5;
+    opacity: 0;
 }
