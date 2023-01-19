@@ -23,7 +23,7 @@ export function createPages() {
             if (carsArr.indexOf(elem) > currentPage * 10 - 1 || carsArr.indexOf(elem) < currentPage * 10 - 10) {
                 element.style.display = 'none'
             } else {
-                element.style.display = 'block'
+                element.style.display = 'flex'
             }
         })
     }
