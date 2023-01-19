@@ -21,9 +21,14 @@ export function createPages() {
         carsArr.forEach((elem) => {
             const element = elem as HTMLElement;
             if (carsArr.indexOf(elem) > currentPage * 10 - 1 || carsArr.indexOf(elem) < currentPage * 10 - 10) {
-                element.style.display = 'none'
+                element.style.opacity = '0'
+                element.style.position = 'absolute'
+                element.style.zIndex = '-10'
             } else {
-                element.style.display = 'flex'
+                element.style.opacity = '1'
+                element.style.position = 'relative'
+                element.style.zIndex = '10'
+
             }
         })
     }
