@@ -1,17 +1,18 @@
-import { getServer } from './server-methods'
+import { getServer } from './server-methods';
 
-let winners: {id: number, wins: number, time: number}[];
+let winners: { id: number, wins: number, time: number }[];
 
 export async function winnersList() {
-    const winnerLine = document.querySelector('.winner-line')
-    winnerLine!.innerHTML = ''
-    const winnersList = await fetch('http://localhost:3000/winners');
-    const cars = await getServer();
-    winners = await winnersList.json()
-    let number = 0;
-    winners.forEach(el => {
-        number++;
-        winnerLine!.innerHTML += `
+  const winnerLine = document.querySelector('.winner-line');
+  winnerLine!.innerHTML = '';
+  /* eslint-disable-next-line */
+  const winnersList = await fetch('http://localhost:3000/winners');
+  const cars = await getServer();
+  winners = await winnersList.json();
+  let number = 0;
+  winners.forEach((el) => {
+    number++;
+    winnerLine!.innerHTML += `
             <div style="display: flex; align-items: center">
                 <p class="graph-point">${number}</p>
 
@@ -120,47 +121,44 @@ export async function winnersList() {
 
                 <p class="graph-point">${el.time}</p>
             </div>
-        `
-    })
+        `;
+  });
 }
 
 export async function winner(win: number, speed: number) {
-    if (winners.some(e => e.id === win)) {
-        let timeCheck = winners.find(obj => obj.id === win)!.time
-        if (timeCheck > speed / 1000) {
-            timeCheck = Math.round(speed) / 1000;
-        }
-
-        let body = {
-            wins: winners.find(obj => obj.id === win)!.wins + 1, 
-            time: timeCheck
-        }
-
-        fetch(`http://localhost:3000/winners/${win}`, {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(body),
-        
-          });
-    } else {
-        const innerBody = {
-            id: win,
-            wins: 1,
-            time: Math.round(speed)/1000
-        }
-
-        fetch(`http://localhost:3000/winners`, {
-            method: 'POST',
-            headers: {
-              'Content-type': 'application/json',
-            },
-            body: JSON.stringify(innerBody),
-        })
-
+  if (winners.some((e) => e.id === win)) {
+    let timeCheck = winners.find((obj) => obj.id === win)!.time;
+    if (timeCheck > speed / 1000) {
+      timeCheck = Math.round(speed) / 1000;
     }
-    winnersList()
-  
-    
+
+    const body = {
+      wins: winners.find((obj) => obj.id === win)!.wins + 1,
+      time: timeCheck,
+    };
+
+    fetch(`http://localhost:3000/winners/${win}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+
+    });
+  } else {
+    const innerBody = {
+      id: win,
+      wins: 1,
+      time: Math.round(speed) / 1000,
+    };
+
+    fetch('http://localhost:3000/winners', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(innerBody),
+    });
+  }
+  winnersList();
 }

@@ -7,4 +7,4 @@ require('./flag.png');
 
 eventListeners();
 onload();
-winnersList()
+winnersList();

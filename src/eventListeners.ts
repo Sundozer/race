@@ -55,6 +55,9 @@ export function eventListeners() {
     }
     if (targ.innerHTML === 'Remove') {
       deleteCar(targ);
+      fetch(`http://localhost:3000/winners/${Number(targ.id.slice(6))}`, {
+        method: 'DELETE',
+      });
     }
   });
 
