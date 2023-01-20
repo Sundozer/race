@@ -1,10 +1,18 @@
-import { createCar, updateCarServer, deleteCar, generate100 } from './createCar';
-import { moveOneCar, reset, changeButtonsToB, changeButtonsToA } from './move';
-import { updateCar } from './update-car';
+/* eslint-disable-next-line */
+import {
+  createCar, updateCarServer, deleteCar, generate100,
+} from './createCar';
+/* eslint-disable-next-line */
+import {
+  moveOneCar, reset, changeButtonsToB, changeButtonsToA,
+} from './move';
+/* eslint-disable-next-line */
 import { onload } from './onload';
 import { createPages } from './createPages';
+/* eslint-disable-next-line */
 export let currentPage = 1;
-export let finishList: {id: number, velocity: number}[] = []
+/* eslint-disable-next-line */
+export let finishList: { id: number, velocity: number }[] = [];
 
 export function eventListeners() {
   const carsBlock = document.querySelector('.cars-block');
@@ -31,10 +39,10 @@ export function eventListeners() {
     if (targ.className === 'butA') {
       const butA = document.querySelector('.butA') as HTMLElement;
       moveOneCar(carToMove);
-      changeButtonsToB(butA)
+      changeButtonsToB(butA);
     }
     if (targ.className === 'butA butB') {
-      changeButtonsToA(targ)
+      changeButtonsToA(targ);
       reset(carToMove);
     }
     if (targ.innerHTML === 'Select') {
@@ -71,7 +79,6 @@ export function eventListeners() {
         color: updateColor.value,
       };
       const carToUpdate = Number(selected.id.slice(6));
-      console.log(carToUpdate)
       updateCarServer(carToUpdate, bod);
     }
   });
@@ -84,7 +91,7 @@ export function eventListeners() {
       const elem = el as HTMLElement;
       const buttonA = el.parentElement?.parentElement?.previousElementSibling?.firstElementChild?.firstElementChild as HTMLElement;
       moveOneCar(elem);
-      changeButtonsToB(buttonA)
+      changeButtonsToB(buttonA);
     });
   });
 
@@ -95,103 +102,104 @@ export function eventListeners() {
       const elem = el as HTMLElement;
       const buttonB = el.parentElement?.parentElement?.previousElementSibling?.firstElementChild?.nextElementSibling?.firstElementChild as HTMLElement;
       reset(elem);
-      changeButtonsToA(buttonB)
+      changeButtonsToA(buttonB);
     });
   });
 
   generateCarsButton.addEventListener('click', () => {
     const carsList = [
-      "Abarth",
-    "Alfa Romeo",
-    "Aston Martin",
-    "Audi",
-    "Bentley",
-    "BMW",
-    "Bugatti",
-    "Cadillac",
-    "Chevrolet",
-    "Chrysler",
-    "Citroën",
-    "Dacia",
-    "Daewoo",
-    "Daihatsu",
-    "Dodge",
-    "Donkervoort",
-    "DS",
-    "Ferrari",
-    "Fiat",
-    "Fisker",
-    "Ford",
-    "Honda",
-    "Hummer",
-    "Hyundai",
-    "Infiniti",
-    "Iveco",
-    "Jaguar",
-    "Jeep",
-    "Kia",
-    "KTM",
-    "Lada",
-    "Lamborghini",
-    "Lancia",
-    "Land Rover",
-    "Landwind",
-    "Lexus",
-    "Lotus",
-    "Maserati",
-    "Maybach",
-    "Mazda",
-    "McLaren",
-    "Mercedes-Benz",
-    "MG",
-    "Mini",
-    "Mitsubishi",
-    "Morgan",
-    "Nissan",
-    "Opel",
-    "Peugeot",
-    "Porsche",
-    "Renault",
-    "Rolls-Royce",
-    "Rover",
-    "Saab",
-    "Seat",
-    "Skoda",
-    "Smart",
-    "SsangYong",
-    "Subaru",
-    "Suzuki",
-    "Tesla",
-    "Toyota",
-    "Volkswagen",
-    "Volvo",
-    ]
+      'Abarth',
+      'Alfa Romeo',
+      'Aston Martin',
+      'Audi',
+      'Bentley',
+      'BMW',
+      'Bugatti',
+      'Cadillac',
+      'Chevrolet',
+      'Chrysler',
+      'Citroën',
+      'Dacia',
+      'Daewoo',
+      'Daihatsu',
+      'Dodge',
+      'Donkervoort',
+      'DS',
+      'Ferrari',
+      'Fiat',
+      'Fisker',
+      'Ford',
+      'Honda',
+      'Hummer',
+      'Hyundai',
+      'Infiniti',
+      'Iveco',
+      'Jaguar',
+      'Jeep',
+      'Kia',
+      'KTM',
+      'Lada',
+      'Lamborghini',
+      'Lancia',
+      'Land Rover',
+      'Landwind',
+      'Lexus',
+      'Lotus',
+      'Maserati',
+      'Maybach',
+      'Mazda',
+      'McLaren',
+      'Mercedes-Benz',
+      'MG',
+      'Mini',
+      'Mitsubishi',
+      'Morgan',
+      'Nissan',
+      'Opel',
+      'Peugeot',
+      'Porsche',
+      'Renault',
+      'Rolls-Royce',
+      'Rover',
+      'Saab',
+      'Seat',
+      'Skoda',
+      'Smart',
+      'SsangYong',
+      'Subaru',
+      'Suzuki',
+      'Tesla',
+      'Toyota',
+      'Volkswagen',
+      'Volvo',
+    ];
     for (let i = 0; i < 10; i++) {
-      let randomColor = '#' + `${Math.floor(Math.random()*16777215).toString(16)}`
-      generate100(carsList[Math.ceil(Math.random() * carsList.length)], randomColor)
+      /* eslint-disable-next-line */
+      const randomColor = '#' + `${Math.floor(Math.random() * 16777215).toString(16)}`;
+      generate100(carsList[Math.ceil(Math.random() * carsList.length)], randomColor);
     }
     carsBlock!.innerHTML = '';
     pagesBlock.innerHTML = '';
     onload();
-  })
+  });
 
   pagesBlock.addEventListener('click', (e) => {
     const targ = e.target as HTMLElement;
-    currentPage = Number(targ.innerHTML.slice(4))
-    createPages()
-  })
+    currentPage = Number(targ.innerHTML.slice(4));
+    createPages();
+  });
 
   toGarage.addEventListener('click', () => {
     garagePage.style.opacity = '1';
-    garagePage.style.zIndex = '5'
+    garagePage.style.zIndex = '5';
     winnersPage.style.opacity = '0';
-    winnersPage.style.zIndex = '-5'
-  })
+    winnersPage.style.zIndex = '-5';
+  });
 
   toWinners.addEventListener('click', () => {
     winnersPage.style.opacity = '1';
-    winnersPage.style.zIndex = '5'
+    winnersPage.style.zIndex = '5';
     garagePage.style.opacity = '0';
-    garagePage.style.zIndex = '-5'
-  })
+    garagePage.style.zIndex = '-5';
+  });
 }

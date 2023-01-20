@@ -2,6 +2,7 @@ import {
   getServer, createServerId, updateServerId, updateServerIdParameter, deleteServerId,
 } from './server-methods';
 import urlPng from './flag.png';
+/* eslint-disable-next-line */
 import { createPages } from './createPages';
 
 function writeNumberOfCars(number:number) {
@@ -133,11 +134,11 @@ export async function onload() {
                 </svg>
             </div>
         </div>
-        <p style="overflow-x: hidden" class="dots">${'.'.repeat(numberOfDots)}</p>
+        <p style="overflow-x: hidden" class="dots">${'.'.repeat(numberOfDots * 5)}</p>
         </div>
         `;
     document.querySelector(`#line${element.id}`)!.appendChild(flagPng);
   });
   writeNumberOfCars(cars.length);
-  createPages()
+  createPages();
 }

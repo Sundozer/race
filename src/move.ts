@@ -1,5 +1,6 @@
+/* eslint-disable-next-line */
 import { finishList } from './eventListeners';
-import { winner } from './winner';
+import { winner, winnersList } from './winner';
 
 export async function moveOneCar(car: HTMLElement) {
   const idNumber = Number(car.id.slice(6));
@@ -7,7 +8,6 @@ export async function moveOneCar(car: HTMLElement) {
     method: 'PATCH',
   });
   const ditanceVelocity = await resp.json();
-  
 
   fetch(`http://127.0.0.1:3000/engine/?id=${idNumber}&status=drive`, {
     method: 'PATCH',
@@ -23,8 +23,8 @@ export async function moveOneCar(car: HTMLElement) {
 
   function animEnd() {
     if (!finishList.length) {
-      finishList.push({id: idNumber, velocity: ditanceVelocity.velocity})
-      winner(finishList[0].id)
+      finishList.push({ id: idNumber, velocity: ditanceVelocity.velocity });
+      winner(finishList[0].id, ditanceVelocity.distance / ditanceVelocity.velocity);
     }
     car.classList.remove('car-animation');
     car.style.left = '86%';
@@ -44,9 +44,7 @@ export function reset(car: HTMLElement) {
   fetch(`http://127.0.0.1:3000/engine/?id=${idNumber}&status=stopped`, {
     method: 'PATCH',
   });
-  
 }
-
 
 export function changeButtonsToB(butA: HTMLElement) {
   butA.style.opacity = '0.5';

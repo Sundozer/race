@@ -1,5 +1,7 @@
 body {
     color: white;
+    width: 100vw;
+    overflow-x: hidden;
 }
 .body {
     background-color: rgb(14, 14, 14);
@@ -10,7 +12,7 @@ body {
     cursor: pointer;
 }
 .garage-page {
-    position: relative;
+    position: absolute;
     z-index: 5;
 }
 .garage {
@@ -23,6 +25,11 @@ body {
 
 .car-pic {
     width: 140px;
+    height: 100px;
+    position: relative;
+}
+.car-pic-win {
+    width: 8vw;
     height: 100px;
     position: relative;
 }
@@ -83,6 +90,7 @@ body {
 .car-flag {
     display: flex;
     position: relative;
+    width: 100vw;
 }
 .page {
     font-size: 24px;
@@ -100,4 +108,14 @@ body {
     position: relative;
     z-index: -5;
     opacity: 0;
+}
+
+.graph-line {
+    display: flex;
+    background-color: blue;
+    width: 50vw;
+}
+
+.graph-point {
+    width: 10vw;
 }
