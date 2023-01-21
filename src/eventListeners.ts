@@ -195,12 +195,15 @@ export function eventListeners() {
   pagesBlock.addEventListener('click', (e) => {
     const targ = e.target as HTMLElement;
     currentPage = Number(targ.innerHTML.slice(4));
+    document.querySelector('.page')!.innerHTML = `Page ${currentPage}`
+
     createPages();
   });
   
   winnersButtonsBlock.addEventListener('click', (e) => {
     const clicked = e.target as HTMLButtonElement;
     currentPageWinner = Number(clicked.innerHTML.slice(4))
+    document.querySelector('.winners-pages')!.innerHTML = `Page №${currentPageWinner}`
     createPagesWinners()
   })
 
