@@ -1,6 +1,48 @@
 import { getServer } from './server-methods';
+import { currentPageWinner } from './eventListeners';
 
 let winners: { id: number, wins: number, time: number }[];
+
+function createPagesWinners() {
+  const winnersLines = document.querySelectorAll('.one-of-winners')
+  const winnersArr: Element[] = []
+  winnersLines.forEach(el => {
+    winnersArr.push(el)
+  })
+
+
+
+  if (winnersLines.length > 10) {
+    const numberOfPages = Math.floor(winnersLines.length / 10) + 1;
+    const div = document.querySelector('.pages-block');
+    div!.innerHTML = '';
+    const garagePage = document.querySelector('.garage-page');
+    garagePage?.appendChild(div!);
+    for (let i = 0; i < numberOfPages; i++) {
+      const button = document.createElement('button');
+      button.classList.add(`pageNumber${i + 1}`);
+      div!.appendChild(button);
+      button.innerHTML = `Page ${i + 1}`;
+    }
+    winnersLines.forEach((el) => {
+      winnersArr.push(el);
+    });
+    winnersArr.forEach((elem) => {
+      const element = elem as HTMLElement;
+      if (winnersArr.indexOf(elem) > currentPageWinner * 10 - 1 || winnersArr.indexOf(elem) < currentPageWinner * 10 - 10) {
+        element.style.opacity = '0';
+        element.style.position = 'absolute';
+        element.style.zIndex = '-10';
+      } else {
+        element.style.opacity = '1';
+        element.style.position = 'relative';
+        element.style.zIndex = '10';
+      }
+    });
+  }
+}
+
+
 
 export async function winnersList() {
   const winnerLine = document.querySelector('.winner-line');
@@ -13,7 +55,7 @@ export async function winnersList() {
   winners.forEach((el) => {
     number++;
     winnerLine!.innerHTML += `
-            <div style="display: flex; align-items: center">
+            <div class="one-of-winners">
                 <p class="graph-point">${number}</p>
 
                 <div class="graph-point"><svg class="car-pic-win" version="1.0" xmlns="http://www.w3.org/2000/svg"
@@ -123,6 +165,7 @@ export async function winnersList() {
             </div>
         `;
   });
+  createPagesWinners()
 }
 
 export async function winner(win: number, speed: number) {

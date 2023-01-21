@@ -12,6 +12,8 @@ import { createPages } from './createPages';
 /* eslint-disable-next-line */
 export let currentPage = 1;
 /* eslint-disable-next-line */
+export let currentPageWinner = 1;
+/* eslint-disable-next-line */
 export let finishList: { id: number, velocity: number }[] = [];
 
 export function eventListeners() {
