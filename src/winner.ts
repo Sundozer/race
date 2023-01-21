@@ -3,7 +3,9 @@ import { currentPageWinner } from './eventListeners';
 
 let winners: { id: number, wins: number, time: number }[];
 
-function createPagesWinners() {
+
+
+export function createPagesWinners() {
   const winnersLines = document.querySelectorAll('.one-of-winners')
   const winnersArr: Element[] = []
   winnersLines.forEach(el => {
@@ -14,13 +16,13 @@ function createPagesWinners() {
 
   if (winnersLines.length > 10) {
     const numberOfPages = Math.floor(winnersLines.length / 10) + 1;
-    const div = document.querySelector('.pages-block');
+    const div = document.querySelector('.winner-pages-block');
     div!.innerHTML = '';
-    const garagePage = document.querySelector('.garage-page');
+    const garagePage = document.querySelector('.winners-page');
     garagePage?.appendChild(div!);
     for (let i = 0; i < numberOfPages; i++) {
       const button = document.createElement('button');
-      button.classList.add(`pageNumber${i + 1}`);
+      button.classList.add(`winnerPageNumber${i + 1}`);
       div!.appendChild(button);
       button.innerHTML = `Page ${i + 1}`;
     }

@@ -10,6 +10,8 @@ import {
 import { onload } from './onload';
 import { createPages } from './createPages';
 /* eslint-disable-next-line */
+import { createPagesWinners } from './winner';
+/* eslint-disable-next-line */
 export let currentPage = 1;
 /* eslint-disable-next-line */
 export let currentPageWinner = 1;
@@ -30,6 +32,8 @@ export function eventListeners() {
   const garagePage = document.querySelector('.garage-page') as HTMLButtonElement;
   const toWinners = document.querySelector('.to-winners') as HTMLButtonElement;
   const winnersPage = document.querySelector('.winners-page') as HTMLButtonElement;
+  const winnersButtonsBlock = document.querySelector('.winner-pages-block') as HTMLButtonElement;
+  
   let selected: HTMLElement | null | undefined;
   let carName: HTMLElement | null | undefined;
 
@@ -193,6 +197,12 @@ export function eventListeners() {
     currentPage = Number(targ.innerHTML.slice(4));
     createPages();
   });
+  
+  winnersButtonsBlock.addEventListener('click', (e) => {
+    const clicked = e.target as HTMLButtonElement;
+    currentPageWinner = Number(clicked.innerHTML.slice(4))
+    createPagesWinners()
+  })
 
   toGarage.addEventListener('click', () => {
     garagePage.style.opacity = '1';
