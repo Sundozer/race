@@ -1,18 +1,15 @@
 import { getServer } from './server-methods';
+/* eslint-disable-next-line */
 import { currentPageWinner } from './eventListeners';
 
 let winners: { id: number, wins: number, time: number }[];
 
-
-
 export function createPagesWinners() {
-  const winnersLines = document.querySelectorAll('.one-of-winners')
-  const winnersArr: Element[] = []
-  winnersLines.forEach(el => {
-    winnersArr.push(el)
-  })
-
-
+  const winnersLines = document.querySelectorAll('.one-of-winners');
+  const winnersArr: Element[] = [];
+  winnersLines.forEach((el) => {
+    winnersArr.push(el);
+  });
 
   if (winnersLines.length > 10) {
     const numberOfPages = Math.floor(winnersLines.length / 10) + 1;
@@ -43,8 +40,6 @@ export function createPagesWinners() {
     });
   }
 }
-
-
 
 export async function winnersList() {
   const winnerLine = document.querySelector('.winner-line');
@@ -167,7 +162,7 @@ export async function winnersList() {
             </div>
         `;
   });
-  createPagesWinners()
+  createPagesWinners();
 }
 
 export async function winner(win: number, speed: number) {
