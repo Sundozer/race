@@ -26,10 +26,10 @@ export async function onload() {
         </div>
         <div class="a-b-buttons">
             <div>
-                <div class="butA" id="but${element.id}">A</div>
+                <button class="butA" id="but${element.id}">A</button>
             </div>
             <div>
-                <div class="butA butB" id="but${element.id}">B</div>
+                <button disabled=true class="butA butB" id="but${element.id}">B</button>
             </div>
         </div>
         <div class="car-flag" id="line${element.id}">

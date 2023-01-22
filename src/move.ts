@@ -47,13 +47,15 @@ export function reset(car: HTMLElement) {
 }
 
 export function changeButtonsToB(butA: HTMLElement) {
-  butA.style.opacity = '0.5';
-  const butB = butA.parentElement?.nextElementSibling?.firstElementChild as HTMLElement;
-  butB.style.opacity = '1';
+  const buttonis = butA as HTMLButtonElement;
+  buttonis.disabled = true;
+  const butB = butA.parentElement?.nextElementSibling?.firstElementChild as HTMLButtonElement;
+  butB.disabled = false;
 }
 
 export function changeButtonsToA(butB: HTMLElement) {
-  butB.style.opacity = '0.5';
-  const butA = butB.parentElement?.previousElementSibling?.firstElementChild as HTMLElement;
-  butA.style.opacity = '1';
+  const buttonis = butB as HTMLButtonElement;
+  buttonis.disabled = true;
+  const butA = butB.parentElement?.previousElementSibling?.firstElementChild as HTMLButtonElement;
+  butA.disabled = false;
 }

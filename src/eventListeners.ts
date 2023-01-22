@@ -39,7 +39,7 @@ export function eventListeners() {
   let carName: HTMLElement | null | undefined;
 
   carsBlock!.addEventListener('click', (e) => {
-    const targ = e.target as HTMLElement;
+    const targ = e.target as HTMLButtonElement;
     const idNumber = Number(targ.id.slice(3));
     const carToMove = document.querySelector(`#carNum${idNumber}`) as HTMLElement;
 
@@ -220,17 +220,14 @@ export function eventListeners() {
     garagePage.style.opacity = '0';
     garagePage.style.zIndex = '-5';
   });
-  
+
   graphLine.addEventListener('click', (e) => {
     const graphTaget = e.target as HTMLElement;
     if (graphTaget.innerHTML === 'Wins') {
-      sortWinners('wins')
+      sortWinners('wins');
     }
     if (graphTaget.innerHTML === 'Best time (seconds)') {
-      sortWinners('time')
+      sortWinners('time');
     }
-
-
-
-  })
+  });
 }

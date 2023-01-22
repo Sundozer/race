@@ -2,13 +2,14 @@ import { getServer } from './server-methods';
 /* eslint-disable-next-line */
 import { currentPageWinner } from './eventListeners';
 
-
-interface winerInt {
+interface WinerInt {
   id: number,
   wins: number,
   time: number
 }
 let winners: { id: number, wins: number, time: number }[];
+let sortWins = 0;
+let sortTime = 0;
 
 export function createPagesWinners() {
   const winnersLines = document.querySelectorAll('.one-of-winners');
@@ -47,17 +48,15 @@ export function createPagesWinners() {
   }
 }
 
-
-
-export async function winnersList(sort?: winerInt[]) {
+export async function winnersList(sort?: WinerInt[]) {
   const winnerLine = document.querySelector('.winner-line');
   winnerLine!.innerHTML = '';
   /* eslint-disable-next-line */
   const winnersList = await fetch('http://localhost:3000/winners');
-  let cars = await getServer();
+  const cars = await getServer();
   winners = await winnersList.json();
   if (sort) {
-    winners = sort;    
+    winners = sort;
   }
   document.querySelector('.winners-count')!.innerHTML = `Winners (${winners.length})`;
   let number = 0;
@@ -177,15 +176,27 @@ export async function winnersList(sort?: winerInt[]) {
   createPagesWinners();
 }
 export async function sortWinners(sort: string) {
-  const winnersLi = await fetch('http://localhost:3000/winners')
-  const arrayOfCars = await winnersLi.json()
+  const winnersLi = await fetch('http://localhost:3000/winners');
+  const arrayOfCars = await winnersLi.json();
   if (sort === 'wins') {
-    arrayOfCars.sort(function(a: winerInt, b: winerInt) { return b.wins - a.wins })
+    if (sortWins === 0) {
+      arrayOfCars.sort((a: WinerInt, b: WinerInt) => b.wins - a.wins);
+      sortWins = 1;
+    } else {
+      arrayOfCars.sort((a: WinerInt, b: WinerInt) => a.wins - b.wins);
+      sortWins = 0;
+    }
   }
   if (sort === 'time') {
-    arrayOfCars.sort(function(a: winerInt, b: winerInt) { return a.time - b.time })
+    if (sortTime === 0) {
+      arrayOfCars.sort((a: WinerInt, b: WinerInt) => a.time - b.time);
+      sortTime = 1;
+    } else {
+      arrayOfCars.sort((a: WinerInt, b: WinerInt) => b.time - a.time);
+      sortTime = 0;
+    }
   }
-  winnersList(arrayOfCars)
+  winnersList(arrayOfCars);
 }
 
 export async function winner(win: number, speed: number) {
