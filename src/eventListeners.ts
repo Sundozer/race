@@ -10,7 +10,7 @@ import {
 import { onload } from './onload';
 import { createPages } from './createPages';
 /* eslint-disable-next-line */
-import { createPagesWinners } from './winner';
+import { createPagesWinners, sortWinners, winnersList } from './winner';
 /* eslint-disable-next-line */
 export let currentPage = 1;
 /* eslint-disable-next-line */
@@ -33,6 +33,7 @@ export function eventListeners() {
   const toWinners = document.querySelector('.to-winners') as HTMLButtonElement;
   const winnersPage = document.querySelector('.winners-page') as HTMLButtonElement;
   const winnersButtonsBlock = document.querySelector('.winner-pages-block') as HTMLButtonElement;
+  const graphLine = document.querySelector('.graph-line') as HTMLElement;
 
   let selected: HTMLElement | null | undefined;
   let carName: HTMLElement | null | undefined;
@@ -43,9 +44,8 @@ export function eventListeners() {
     const carToMove = document.querySelector(`#carNum${idNumber}`) as HTMLElement;
 
     if (targ.className === 'butA') {
-      const butA = document.querySelector('.butA') as HTMLElement;
       moveOneCar(carToMove);
-      changeButtonsToB(butA);
+      changeButtonsToB(targ);
     }
     if (targ.className === 'butA butB') {
       changeButtonsToA(targ);
@@ -98,7 +98,7 @@ export function eventListeners() {
     const allCars = document.querySelectorAll('.car-pic');
     allCars.forEach((el) => {
       const elem = el as HTMLElement;
-      const buttonA = el.parentElement?.parentElement?.previousElementSibling?.firstElementChild?.firstElementChild as HTMLElement;
+      const buttonA = elem.parentElement?.parentElement?.previousElementSibling?.firstElementChild?.firstElementChild as HTMLElement;
       moveOneCar(elem);
       changeButtonsToB(buttonA);
     });
@@ -182,7 +182,7 @@ export function eventListeners() {
       'Volkswagen',
       'Volvo',
     ];
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < 100; i++) {
       /* eslint-disable-next-line */
       const randomColor = '#' + `${Math.floor(Math.random() * 16777215).toString(16)}`;
       generate100(carsList[Math.ceil(Math.random() * carsList.length)], randomColor);
@@ -220,4 +220,17 @@ export function eventListeners() {
     garagePage.style.opacity = '0';
     garagePage.style.zIndex = '-5';
   });
+  
+  graphLine.addEventListener('click', (e) => {
+    const graphTaget = e.target as HTMLElement;
+    if (graphTaget.innerHTML === 'Wins') {
+      sortWinners('wins')
+    }
+    if (graphTaget.innerHTML === 'Best time (seconds)') {
+      sortWinners('time')
+    }
+
+
+
+  })
 }

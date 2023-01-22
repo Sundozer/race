@@ -5,7 +5,7 @@ import urlPng from './flag.png';
 /* eslint-disable-next-line */
 import { createPages } from './createPages';
 
-function writeNumberOfCars(number:number) {
+async function writeNumberOfCars(number:number) {
   document.querySelector('.garage')!.innerHTML = `Garage(${number})`;
 }
 

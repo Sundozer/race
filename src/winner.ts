@@ -2,6 +2,12 @@ import { getServer } from './server-methods';
 /* eslint-disable-next-line */
 import { currentPageWinner } from './eventListeners';
 
+
+interface winerInt {
+  id: number,
+  wins: number,
+  time: number
+}
 let winners: { id: number, wins: number, time: number }[];
 
 export function createPagesWinners() {
@@ -41,13 +47,19 @@ export function createPagesWinners() {
   }
 }
 
-export async function winnersList() {
+
+
+export async function winnersList(sort?: winerInt[]) {
   const winnerLine = document.querySelector('.winner-line');
   winnerLine!.innerHTML = '';
   /* eslint-disable-next-line */
   const winnersList = await fetch('http://localhost:3000/winners');
-  const cars = await getServer();
+  let cars = await getServer();
   winners = await winnersList.json();
+  if (sort) {
+    winners = sort;    
+  }
+  document.querySelector('.winners-count')!.innerHTML = `Winners (${winners.length})`;
   let number = 0;
   winners.forEach((el) => {
     number++;
@@ -163,6 +175,17 @@ export async function winnersList() {
         `;
   });
   createPagesWinners();
+}
+export async function sortWinners(sort: string) {
+  const winnersLi = await fetch('http://localhost:3000/winners')
+  const arrayOfCars = await winnersLi.json()
+  if (sort === 'wins') {
+    arrayOfCars.sort(function(a: winerInt, b: winerInt) { return b.wins - a.wins })
+  }
+  if (sort === 'time') {
+    arrayOfCars.sort(function(a: winerInt, b: winerInt) { return a.time - b.time })
+  }
+  winnersList(arrayOfCars)
 }
 
 export async function winner(win: number, speed: number) {
