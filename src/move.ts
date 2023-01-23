@@ -13,7 +13,6 @@ export async function moveOneCar(car: HTMLElement) {
     method: 'PATCH',
   }).then((response) => {
     if (!response.ok) {
-      // finishList.splice(finishList.findIndex(x => x.id.toString() === `${idNumber}`), 1)
       car.style.animationPlayState = 'paused';
     }
     fetch(`http://127.0.0.1:3000/engine/?id=${idNumber}&status=stopped`, {
@@ -36,15 +35,6 @@ export async function moveOneCar(car: HTMLElement) {
   car.classList.add('car-animation');
 }
 
-export function reset(car: HTMLElement) {
-  const idNumber = Number(car.id.slice(6));
-  car.classList.remove('car-animation');
-  car.style.left = '0%';
-  car.style.animation = '';
-  fetch(`http://127.0.0.1:3000/engine/?id=${idNumber}&status=stopped`, {
-    method: 'PATCH',
-  });
-}
 
 export function changeButtonsToB(butA: HTMLElement) {
   const buttonis = butA as HTMLButtonElement;
@@ -58,4 +48,27 @@ export function changeButtonsToA(butB: HTMLElement) {
   buttonis.disabled = true;
   const butA = butB.parentElement?.previousElementSibling?.firstElementChild as HTMLButtonElement;
   butA.disabled = false;
+
+}
+
+export async function reset(car: HTMLElement) {
+  const idNumber = Number(car.id.slice(6));
+  const butFromCar = car.parentElement?.parentElement?.previousElementSibling?.firstElementChild?.nextElementSibling?.firstElementChild as HTMLButtonElement;
+  const carNames = butFromCar.parentElement?.parentElement?.previousElementSibling?.firstElementChild?.nextElementSibling?.nextElementSibling as HTMLElement;
+  const save = carNames.innerHTML;
+  carNames.innerHTML += ' (resetting)'
+  butFromCar.style.color = 'purple';
+  fetch(`http://127.0.0.1:3000/engine/?id=${idNumber}&status=stopped`, {
+    method: 'PATCH',
+  })
+  .then((response) => {
+    if (response.ok) {
+      carNames.innerHTML = save;
+      butFromCar.style.color = 'white';
+      car.classList.remove('car-animation');
+      car.style.left = '0%';
+      car.style.animation = '';
+      changeButtonsToA(butFromCar)
+    }
+  });
 }

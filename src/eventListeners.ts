@@ -48,7 +48,7 @@ export function eventListeners() {
       changeButtonsToB(targ);
     }
     if (targ.className === 'butA butB') {
-      changeButtonsToA(targ);
+      // changeButtonsToA(targ);
       reset(carToMove);
     }
     if (targ.innerHTML === 'Select') {
@@ -106,16 +106,24 @@ export function eventListeners() {
 
   const resetCars = document.querySelector('.reset-cars-button');
   resetCars?.addEventListener('click', () => {
+    resetCars.innerHTML = 'Resetting';
+    setTimeout(() => {
+      resetCars.innerHTML = 'Reset';
+    }, 2000);
     const allCars = document.querySelectorAll('.car-pic');
     allCars.forEach((el) => {
       const elem = el as HTMLElement;
       const buttonB = el.parentElement?.parentElement?.previousElementSibling?.firstElementChild?.nextElementSibling?.firstElementChild as HTMLElement;
       reset(elem);
-      changeButtonsToA(buttonB);
+      // changeButtonsToA(buttonB);
     });
   });
 
   generateCarsButton.addEventListener('click', () => {
+    generateCarsButton.innerHTML = 'Generating (up to 5 seconds per 100 cars)';
+    setTimeout(() => {
+      generateCarsButton.innerHTML = 'Generate cars';
+    }, 2000);
     const carsList = [
       'Abarth',
       'Alfa Romeo',
