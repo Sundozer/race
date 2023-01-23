@@ -1,43 +1,75 @@
-import {
-  getServer, createServerId, updateServerId, updateServerIdParameter, deleteServerId,
-} from './server-methods';
-import urlPng from './flag.png';
+import { getServer } from './server-methods';
 /* eslint-disable-next-line */
-import { createPages } from './createPages';
+import { currentPageWinner } from './eventListeners';
 
-async function writeNumberOfCars(number:number) {
-  document.querySelector('.garage')!.innerHTML = `Garage(${number})`;
+interface WinerInt {
+  id: number,
+  wins: number,
+  time: number
+}
+let winners: { id: number, wins: number, time: number }[];
+let sortWins = 0;
+let sortTime = 0;
+
+export function createPagesWinners() {
+  const winnersLines = document.querySelectorAll('.one-of-winners');
+  const winnersArr: Element[] = [];
+  winnersLines.forEach((el) => {
+    winnersArr.push(el);
+  });
+
+  if (winnersLines.length > 10) {
+    const numberOfPages = Math.floor(winnersLines.length / 10) + 1;
+    const div = document.querySelector('.winner-pages-block');
+    div!.innerHTML = '';
+    const garagePage = document.querySelector('.winners-page');
+    garagePage?.appendChild(div!);
+    for (let i = 0; i < numberOfPages; i++) {
+      const button = document.createElement('button');
+      button.classList.add(`winnerPageNumber${i + 1}`);
+      div!.appendChild(button);
+      button.innerHTML = `Page ${i + 1}`;
+    }
+    winnersLines.forEach((el) => {
+      winnersArr.push(el);
+    });
+    winnersArr.forEach((elem) => {
+      const element = elem as HTMLElement;
+      if (winnersArr.indexOf(elem) > currentPageWinner * 10 - 1 || winnersArr.indexOf(elem) < currentPageWinner * 10 - 10) {
+        element.style.opacity = '0';
+        element.style.position = 'absolute';
+        element.style.zIndex = '-10';
+      } else {
+        element.style.opacity = '1';
+        element.style.position = 'relative';
+        element.style.zIndex = '10';
+      }
+    });
+  }
 }
 
-export async function onload() {
-  const numberOfDots = window.innerWidth / 2;
-  const carsBlock = document.querySelector('.cars-block');
+export async function winnersList(sort?: WinerInt[]) {
+  const winnerLine = document.querySelector('.winner-line');
+  winnerLine!.innerHTML = '';
+  /* eslint-disable-next-line */
+  const winnersList = await fetch('http://localhost:3000/winners');
   const cars = await getServer();
-  const flagPng = document.createElement('img');
-  flagPng.src = urlPng;
-  flagPng.classList.add('flag');
-  cars.reverse();
-  cars.forEach((element: { name: string, color: string, id: number }) => {
-    carsBlock!.innerHTML += `<div class="one-of-cars" id="one-of-cars${element.id}">
-        <div>
-            <button class="car-buttons" id="select${element.id}">Select</button>
-            <button class="car-buttons" id="remove${element.id}">Remove</button>
-            <span class="model-name">${element.name}</span>
-        </div>
-        <div class="a-b-buttons">
-            <div>
-                <button class="butA" id="but${element.id}">A</button>
-            </div>
-            <div>
-                <button disabled=true class="butA butB" id="but${element.id}">B</button>
-            </div>
-        </div>
-        <div class="car-flag" id="line${element.id}">
-            <div style="width: 100%">
-                <svg class="car-pic" id="carNum${element.id}" version="1.0" xmlns="http://www.w3.org/2000/svg"
+  winners = await winnersList.json();
+  if (sort) {
+    winners = sort;
+  }
+  document.querySelector('.winners-count')!.innerHTML = `Winners (${winners.length})`;
+  let number = 0;
+  winners.forEach((el) => {
+    number++;
+    winnerLine!.innerHTML += `
+            <div class="one-of-winners">
+                <p class="graph-point">${number}</p>
+
+                <div class="graph-point"><svg class="car-pic-win" version="1.0" xmlns="http://www.w3.org/2000/svg"
                 width="1280.000000pt" height="640.000000pt" viewBox="0 0 1280.000000 640.000000"
                 preserveAspectRatio="xMidYMid meet">
-                <g fill="${element.color}" transform="translate(0.000000,640.000000) scale(0.100000,-0.100000)"
+                <g fill="${cars.find((obj: { id: number; }) => obj.id === el.id).color}" transform="translate(0.000000,640.000000) scale(0.100000,-0.100000)"
                 stroke="none">
                 <path d="M3565 5336 c-106 -30 -101 -26 -108 -111 -4 -42 -9 -80 -12 -85 -6
                 -10 -246 -105 -590 -234 -448 -167 -1052 -415 -1173 -483 -78 -43 -193 -91
@@ -131,14 +163,76 @@ export async function onload() {
                 <path d="M11033 1803 c-10 -3 -13 -47 -13 -169 0 -90 4 -164 8 -164 36 0 186
                 61 239 98 16 10 -216 242 -234 235z"/>
                 </g>
-                </svg>
+                </svg></div>
+
+                <p class="graph-point">${cars.find((obj: { id: number; }) => obj.id === el.id).name}</p>
+
+                <p class="graph-point">${el.wins}</p>
+
+                <p class="graph-point">${el.time}</p>
             </div>
-        </div>
-        <p style="overflow-x: hidden" class="dots">${'.'.repeat(numberOfDots * 5)}</p>
-        </div>
         `;
-    document.querySelector(`#line${element.id}`)!.appendChild(flagPng);
   });
-  writeNumberOfCars(cars.length);
-  createPages();
+  createPagesWinners();
+}
+export async function sortWinners(sort: string) {
+  const winnersLi = await fetch('http://localhost:3000/winners');
+  const arrayOfCars = await winnersLi.json();
+  if (sort === 'wins') {
+    if (sortWins === 0) {
+      arrayOfCars.sort((a: WinerInt, b: WinerInt) => b.wins - a.wins);
+      sortWins = 1;
+    } else {
+      arrayOfCars.sort((a: WinerInt, b: WinerInt) => a.wins - b.wins);
+      sortWins = 0;
+    }
+  }
+  if (sort === 'time') {
+    if (sortTime === 0) {
+      arrayOfCars.sort((a: WinerInt, b: WinerInt) => a.time - b.time);
+      sortTime = 1;
+    } else {
+      arrayOfCars.sort((a: WinerInt, b: WinerInt) => b.time - a.time);
+      sortTime = 0;
+    }
+  }
+  winnersList(arrayOfCars);
+}
+
+export async function winner(win: number, speed: number) {
+  if (winners.some((e) => e.id === win)) {
+    let timeCheck = winners.find((obj) => obj.id === win)!.time;
+    if (timeCheck > speed / 1000) {
+      timeCheck = Math.round(speed) / 1000;
+    }
+
+    const body = {
+      wins: winners.find((obj) => obj.id === win)!.wins + 1,
+      time: timeCheck,
+    };
+
+    fetch(`http://localhost:3000/winners/${win}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(body),
+
+    });
+  } else {
+    const innerBody = {
+      id: win,
+      wins: 1,
+      time: Math.round(speed) / 1000,
+    };
+
+    fetch('http://localhost:3000/winners', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify(innerBody),
+    });
+  }
+  winnersList();
 }

@@ -1,5 +1,7 @@
 body {
     color: white;
+    width: 100vw;
+    overflow-x: hidden;
 }
 .body {
     background-color: rgb(14, 14, 14);
@@ -9,7 +11,10 @@ body {
     font-size: 24px;
     cursor: pointer;
 }
-
+.garage-page {
+    position: absolute;
+    z-index: 5;
+}
 .garage {
     font-size: 30px;
 }
@@ -17,14 +22,42 @@ body {
     display: flex;
     flex-direction: column;
 }
+
 .car-pic {
     width: 140px;
     height: 100px;
+    position: relative;
 }
+.car-pic-win {
+    width: 8vw;
+    height: 100px;
+    position: relative;
+}
+
+.car-animation {
+    animation: 2s linear;
+    animation-name: lolo;
+}
+
+@keyframes lolo {
+    from {
+        left: 0;
+    }
+
+    to {
+        left: 86%;
+    }
+}
+
 .one-of-cars {
     display: flex;
     flex-direction: column;
-    margin-bottom: -40px;
+    margin-bottom: -60px;
+}
+
+.dots {
+    position: relative;
+    top: -58px;
 }
 .butA {
     width: 30px;
@@ -51,9 +84,40 @@ body {
 .flag {
     height: 100px;
     position: absolute;
-    right: 100px;
+    bottom: 30px;
+    left: 85%;
 }
 .car-flag {
     display: flex;
     position: relative;
+    width: 100vw;
+}
+.page {
+    font-size: 24px;
+}
+
+.pages-block {
+    position: relative;
+    z-index: 50;
+}
+
+.winners-page {
+    position: relative;
+    z-index: -5;
+    opacity: 0;
+}
+
+.graph-line {
+    display: flex;
+    background-color: blue;
+    width: 50vw;
+}
+
+.graph-point {
+    width: 10vw;
+    cursor: pointer;
+}
+.one-of-winners {
+    display: flex;
+    align-items: center
 }

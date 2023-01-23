@@ -33,7 +33,7 @@ export async function createServerId(innerBody: { name:string, color: string }) 
   return data;
 }
 
-export async function updateServerId(id: null, innerBody: { name:string, color: string }) {
+export async function updateServerId(id: number, innerBody: { name:string, color: string }) {
   const res = await fetch(`${baseUrl}${path.garage}/${id}`, {
     method: 'PUT',
     headers: {
