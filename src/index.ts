@@ -2,7 +2,9 @@ import { eventListeners } from './eventListeners';
 import { onload } from './onload';
 import { winnersList } from './winner';
 import './scss/style.scss';
+
 require('./flag.png');
+
 const innerBodyContent = `<div class="main-navigation">
 <button class="to-garage navigation_button">To garage</button>
 <button class="to-winners navigation_button">To winners</button>
@@ -50,8 +52,8 @@ const innerBodyContent = `<div class="main-navigation">
     
 </div>
 <div class="winner-pages-block"></div>
-</div>`
-document.querySelector('.body')!.innerHTML = innerBodyContent
+</div>`;
+document.querySelector('.body')!.innerHTML = innerBodyContent;
 
 eventListeners();
 onload();
