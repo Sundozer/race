@@ -35,7 +35,6 @@ export async function moveOneCar(car: HTMLElement) {
   car.classList.add('car-animation');
 }
 
-
 export function changeButtonsToB(butA: HTMLElement) {
   const buttonis = butA as HTMLButtonElement;
   buttonis.disabled = true;
@@ -48,7 +47,6 @@ export function changeButtonsToA(butB: HTMLElement) {
   buttonis.disabled = true;
   const butA = butB.parentElement?.previousElementSibling?.firstElementChild as HTMLButtonElement;
   butA.disabled = false;
-
 }
 
 export async function reset(car: HTMLElement) {
@@ -56,19 +54,19 @@ export async function reset(car: HTMLElement) {
   const butFromCar = car.parentElement?.parentElement?.previousElementSibling?.firstElementChild?.nextElementSibling?.firstElementChild as HTMLButtonElement;
   const carNames = butFromCar.parentElement?.parentElement?.previousElementSibling?.firstElementChild?.nextElementSibling?.nextElementSibling as HTMLElement;
   const save = carNames.innerHTML;
-  carNames.innerHTML += ' (resetting)'
+  carNames.innerHTML += ' (resetting)';
   butFromCar.style.color = 'purple';
   fetch(`http://127.0.0.1:3000/engine/?id=${idNumber}&status=stopped`, {
     method: 'PATCH',
   })
-  .then((response) => {
-    if (response.ok) {
-      carNames.innerHTML = save;
-      butFromCar.style.color = 'white';
-      car.classList.remove('car-animation');
-      car.style.left = '0%';
-      car.style.animation = '';
-      changeButtonsToA(butFromCar)
-    }
-  });
+    .then((response) => {
+      if (response.ok) {
+        carNames.innerHTML = save;
+        butFromCar.style.color = 'white';
+        car.classList.remove('car-animation');
+        car.style.left = '0%';
+        car.style.animation = '';
+        changeButtonsToA(butFromCar);
+      }
+    });
 }
